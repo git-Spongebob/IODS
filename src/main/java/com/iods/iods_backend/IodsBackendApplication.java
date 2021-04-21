@@ -1,0 +1,15 @@
+package com.iods.iods_backend;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@MapperScan("com.iods.iods_backend.mapper")
+public class IodsBackendApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(IodsBackendApplication.class, args);
+    }
+
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iods.iods_backend.validate.mapper.ValidateMapper">
+    <select id="queryUser" resultType="com.iods.iods_backend.validate.entity.UserEntity">
+    select * from user_info A where A.PHONE = #{phoneNum} and A.PASSWORD = #{password}
+</select>
+
+    <select id="repeateTest" resultType="java.lang.String">
+    select COUNT(*) from user_info where PHONE = #{phoneNum}
+</select>
+
+    <select id="queryUserByPhone" resultType="com.iods.iods_backend.validate.entity.UserEntity">
+     select * from user_info  where PHONE = #{phone}
+</select>
+
+    <insert id="insertUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">
+    insert into user_info (NAME, PASSWORD, PHONE) VALUES (#{name},#{password},#{phone})
+</insert>
+
+</mapper>

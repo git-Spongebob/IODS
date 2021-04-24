@@ -15,7 +15,7 @@
 </select>
 
     <insert id="insertUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">
-    insert into user_info (NAME, PASSWORD, PHONE) VALUES (#{name},#{password},#{phone})
+    insert into user_info (NAME, PASSWORD, PHONE,userid) VALUES (#{name},#{password},#{phone},REPLACE(UUID(), '-', ''))
 </insert>
 
 </mapper>

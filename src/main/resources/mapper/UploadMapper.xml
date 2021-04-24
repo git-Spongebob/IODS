@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iods.iods_backend.upload.mapper.UploadMapper">
+    <insert id="savePic" parameterType="java.util.Map">
+        INSERT INTO pic (zj, picmc, userid, sfgx,cjsj,filetype) VALUES (#{zj},#{picmc},#{userid},#{sfgx},now(),#{filetype})
+    </insert>
+    <insert id="savePicShzt" parameterType="java.util.Map">
+        INSERT INTO pic_shzt (zj, piczj, shzt, bz) VALUES (REPLACE(UUID(), '-', ''),#{piczj},'0',#{bz})
+    </insert>
+    <insert id="savePicType" parameterType="java.util.Map">
+        INSERT INTO pic_type (zj, piczj, type) VALUES (REPLACE(UUID(), '-', ''),#{piczj},#{type})
+    </insert>
+    <insert id="picSc" parameterType="java.util.Map">
+        INSERT INTO pic_sc (zj, piczj, userid) VALUES (REPLACE(UUID(), '-', ''),#{piczj},#{userid})
+    </insert>
+    <delete id="deletePicSc" parameterType="java.lang.String">
+        DELETE FROM pic_sc WHERE zj = #{_parameter}
+    </delete>
+    <select id="picScList" parameterType="java.util.Map" resultType="java.util.Map">
+        select T1.zj,T1.userid,T2.picmc,concat('D:/iodsPic/',T2.zj,T2.filetype) path
+        from pic_sc T1
+        left join pic T2 on T2.zj = T1.piczj
+        left join pic_shzt T3 on T2.zj = T3.piczj
+        where T1.userid = #{userid}
+        and T2.sfgx = '1'
+        and T3.shzt = '1'
+        limit ${page},${rows}
+    </select>
+    <update id="picSh" parameterType="java.util.Map">
+        update pic_shzt set shzt = #{shzt},bz = #{bz} where zj = #{zj}
+    </update>
+    <select id="picShList" parameterType="java.util.Map" resultType="java.util.Map">
+        select T1.zj,T2.picmc,T2.userid,concat('D:/iodsPic/',T2.zj,T2.filetype) path
+        from pic_shzt T1
+        left join pic T2 on T2.zj = T1.piczj
+        where 1=1
+        <if test="shzt != null and shzt != ''">
+            and T1.shzt = #{shzt}
+        </if>
+        order by T2.cjsj asc
+        limit ${page},${rows}
+    </select>
+    <insert id="picSsjl" parameterType="java.util.Map">
+        INSERT INTO pic_ssjl (zj, gjc, userid) VALUES (REPLACE(UUID(), '-', ''),#{picmc},#{userid})
+    </insert>
+    <select id="picSsjlUser" parameterType="java.util.Map" resultType="java.util.Map">
+        select distinct gjc from pic_ssjl where userid = #{userid}
+    </select>
+    <select id="picSsList" parameterType="java.util.Map" resultType="java.util.Map">
+        select T1.zj,T1.userid,T1.picmc,concat('D:/iodsPic/',T1.zj,T1.filetype) path
+        from pic T1
+        left join pic_shzt T2 on T1.zj = T2.piczj
+        where T1.sfgx = '1'
+        and T2.shzt = '1'
+        <if test="type != null and type != ''">
+            and T1.zj in (select piczj from pic_type where type = #{type})
+        </if>
+        <if test="picmc != null and picmc != ''">
+            and T1.picmc like concat('%',#{picmc},'%')
+        </if>
+        limit ${page},${rows}
+    </select>
+    <select id="picSsrc" resultType="java.util.Map">
+        select gjc
+        from (
+            select count(0) cs,gjc from pic_ssjl group by gjc
+        )T order by T.cs desc
+    </select>
+    <delete id="deletePicSsjl" parameterType="java.lang.String">
+        delete from pic_ssjl where userid = #{_parameter}
+    </delete>
+    <insert id="picXzjl" parameterType="java.util.Map">
+        INSERT INTO pic_xzjl (zj, piczj, userid) VALUES (REPLACE(UUID(), '-', ''),#{piczj},#{userid})
+    </insert>
+    <select id="picSsjlCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(0) from pic_xzjl where piczj = #{piczj}
+    </select>
+    <select id="zdcx" parameterType="java.util.Map" resultType="java.util.Map">
+        select mc,dm from zdb where lx = #{lx}
+    </select>
+</mapper>

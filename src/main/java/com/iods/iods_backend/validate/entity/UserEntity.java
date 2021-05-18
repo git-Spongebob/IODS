@@ -11,6 +11,10 @@ import lombok.Data;
 @Data
 public class UserEntity {
     /**
+     * 用户id
+     */
+    private String userid;
+    /**
      * 用户名
      */
     private String name;

@@ -12,6 +12,7 @@ import java.util.Map;
 @RequestMapping("/validate")
 /**
  * @author xurongbin
+ * 登录验证
  */
 public class ValidateController {
     @Autowired

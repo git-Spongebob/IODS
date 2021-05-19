@@ -3,7 +3,7 @@
 
 <mapper namespace="com.iods.iods_backend.upload.mapper.UploadMapper">
     <insert id="savePic" parameterType="java.util.Map">
-        INSERT INTO pic (zj, picmc, userid, sfgx,cjsj,filetype) VALUES (#{zj},#{picmc},#{userid},#{sfgx},now(),#{filetype})
+        INSERT INTO pic (zj, picmc, userid, sfgx,cjsj,filetype,file) VALUES (#{zj},#{picmc},#{userid},#{sfgx},now(),#{filetype},#{file})
     </insert>
     <insert id="savePicShzt" parameterType="java.util.Map">
         INSERT INTO pic_shzt (zj, piczj, shzt, bz) VALUES (REPLACE(UUID(), '-', ''),#{piczj},'0',#{bz})
@@ -48,7 +48,7 @@
         select distinct gjc from pic_ssjl where userid = #{userid}
     </select>
     <select id="picSsList" parameterType="java.util.Map" resultType="java.util.Map">
-        select T1.zj,T1.userid,T1.picmc,concat('D:/iodsPic/',T1.zj,T1.filetype) path
+        select T1.zj,T1.userid,T1.picmc,concat('D:/iodsPic/',T1.zj,T1.filetype) path,concat('data:image/x-icon;base64,',file) file
         from pic T1
         left join pic_shzt T2 on T1.zj = T2.piczj
         where T1.sfgx = '1'

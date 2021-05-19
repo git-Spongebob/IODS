@@ -6,6 +6,7 @@ import com.iods.iods_backend.validate.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -42,6 +43,7 @@ public class UploadController {
             String filePath = "";
             // 多文件上传
             for (MultipartFile file : files){
+
                 String uuid = UUID.randomUUID().toString();
                 uuid = uuid.replace("-", "");
                 // 上传简单文件名
@@ -55,6 +57,12 @@ public class UploadController {
                         .toString();
                 // 保存文件
                 file.transferTo(new File(filePath));
+                File bfile = new File(filePath);
+                FileInputStream inputFile = new FileInputStream(bfile);
+                byte[] buffer = new byte[(int)bfile.length()];
+                inputFile.read(buffer);
+                inputFile.close();
+                String ba64 = new BASE64Encoder().encode(buffer);
                 Map saveMap = new HashMap<>();
                 saveMap.put("zj",uuid);
                 saveMap.put("picmc",filename);
@@ -62,6 +70,7 @@ public class UploadController {
                 saveMap.put("types",types);
                 saveMap.put("sfgx",sfgx);
                 saveMap.put("filetype",filetype);
+                saveMap.put("file",ba64);
                 uploadService.savePic(saveMap);
             }
             return new ReturnMessage().success();

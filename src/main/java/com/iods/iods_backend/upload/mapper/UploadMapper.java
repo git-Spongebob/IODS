@@ -40,4 +40,6 @@ public interface UploadMapper {
     List<Map> picSsjlUser(Map map);
 
     List<Map> picSsrc();
+
+    List<Map> wdsc(Map map);
 }

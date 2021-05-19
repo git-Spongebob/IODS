@@ -37,7 +37,8 @@ public class UploadController {
             @RequestParam("attachments") MultipartFile[] files,
             @RequestParam("userid") String userid,
             @RequestParam("types") String types,
-            @RequestParam("sfgx") String sfgx){
+            @RequestParam("sfgx") String sfgx,
+            @RequestParam("gjc") String gjc){
         try {
             String fileRootPath = "D:/iodsPic/";
             String filePath = "";
@@ -71,6 +72,7 @@ public class UploadController {
                 saveMap.put("sfgx",sfgx);
                 saveMap.put("filetype",filetype);
                 saveMap.put("file",ba64);
+                saveMap.put("gjc",gjc);
                 uploadService.savePic(saveMap);
             }
             return new ReturnMessage().success();
@@ -299,6 +301,20 @@ public class UploadController {
     public ReturnMessage zdcx(@RequestParam Map param){
         try {
             List<Map> data = uploadService.zdcx(param);
+            return new ReturnMessage().success(data);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ReturnMessage().faild(e.getMessage());
+        }
+    }
+    /**
+     * 我的上传
+     *  userid  用户id
+     */
+    @GetMapping("/wdsc")
+    public ReturnMessage wdsc(@RequestParam Map param){
+        try {
+            List<Map> data = uploadService.wdsc(param);
             return new ReturnMessage().success(data);
         }catch (Exception e){
             e.printStackTrace();

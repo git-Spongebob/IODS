@@ -3,7 +3,7 @@
 
 <mapper namespace="com.iods.iods_backend.upload.mapper.UploadMapper">
     <insert id="savePic" parameterType="java.util.Map">
-        INSERT INTO pic (zj, picmc, userid, sfgx,cjsj,filetype,file) VALUES (#{zj},#{picmc},#{userid},#{sfgx},now(),#{filetype},#{file})
+        INSERT INTO pic (zj, picmc, userid, sfgx,cjsj,filetype,file,gjc) VALUES (#{zj},#{picmc},#{userid},#{sfgx},now(),#{filetype},#{file},#{gjc})
     </insert>
     <insert id="savePicShzt" parameterType="java.util.Map">
         INSERT INTO pic_shzt (zj, piczj, shzt, bz) VALUES (REPLACE(UUID(), '-', ''),#{piczj},'0',#{bz})
@@ -18,7 +18,7 @@
         DELETE FROM pic_sc WHERE zj = #{_parameter}
     </delete>
     <select id="picScList" parameterType="java.util.Map" resultType="java.util.Map">
-        select T1.zj,T1.userid,T2.picmc,concat('D:/iodsPic/',T2.zj,T2.filetype) path
+        select T1.zj,T1.userid,T2.picmc,concat('D:/iodsPic/',T2.zj,T2.filetype) path,concat('data:image/x-icon;base64,',T2.file) file
         from pic_sc T1
         left join pic T2 on T2.zj = T1.piczj
         left join pic_shzt T3 on T2.zj = T3.piczj
@@ -31,9 +31,16 @@
         update pic_shzt set shzt = #{shzt},bz = #{bz} where zj = #{zj}
     </update>
     <select id="picShList" parameterType="java.util.Map" resultType="java.util.Map">
-        select T1.zj,T2.picmc,T2.userid,concat('D:/iodsPic/',T2.zj,T2.filetype) path
+        select T1.zj,T2.picmc,T2.userid,concat('D:/iodsPic/',T2.zj,T2.filetype) path,
+               concat('data:image/x-icon;base64,',T2.file) file,
+               T2.gjc,T4.mc type,date_format(T2.cjsj,'%Y-%m-%d %H:%i:%s') cjsj,T5.NAME username,case T2.sfgx when 1 then '是' else '否' end sfgx,
+                T2.filetype,
+               case T1.shzt when '0' then '未审核' when '1' then '审核通过' else '审核未通过' end shzt
         from pic_shzt T1
         left join pic T2 on T2.zj = T1.piczj
+        left join pic_type T3 on T3.piczj = T2.zj
+        left join zdb T4 on T3.type = T4.dm and T4.lx = 'pictype'
+        left join user_info T5 on T2.userid = T5.userid
         where 1=1
         <if test="shzt != null and shzt != ''">
             and T1.shzt = #{shzt}
@@ -48,9 +55,11 @@
         select distinct gjc from pic_ssjl where userid = #{userid}
     </select>
     <select id="picSsList" parameterType="java.util.Map" resultType="java.util.Map">
-        select T1.zj,T1.userid,T1.picmc,concat('D:/iodsPic/',T1.zj,T1.filetype) path,concat('data:image/x-icon;base64,',file) file
+        select T1.zj,T1.userid,T1.picmc,concat('D:/iodsPic/',T1.zj,T1.filetype) path,concat('data:image/x-icon;base64,',file) file,
+               T3.zj sc
         from pic T1
         left join pic_shzt T2 on T1.zj = T2.piczj
+        left join (select * from pic_sc where userid = #{userid}) T3 on T3.piczj = T1.zj
         where T1.sfgx = '1'
         and T2.shzt = '1'
         <if test="type != null and type != ''">
@@ -78,5 +87,20 @@
     </select>
     <select id="zdcx" parameterType="java.util.Map" resultType="java.util.Map">
         select mc,dm from zdb where lx = #{lx}
+    </select>
+    <select id="wdsc" parameterType="java.util.Map" resultType="java.util.Map">
+        select T1.zj,T2.picmc,T2.userid,concat('D:/iodsPic/',T2.zj,T2.filetype) path,
+        concat('data:image/x-icon;base64,',T2.file) file,
+        T2.gjc,T4.mc type,date_format(T2.cjsj,'%Y-%m-%d %H:%i:%s') cjsj,T5.NAME username,case T2.sfgx when 1 then '是' else '否' end sfgx,
+        T2.filetype,
+        case T1.shzt when '0' then '未审核' when '1' then '审核通过' else '审核未通过' end shzt
+        from pic_shzt T1
+        left join pic T2 on T2.zj = T1.piczj
+        left join pic_type T3 on T3.piczj = T2.zj
+        left join zdb T4 on T3.type = T4.dm and T4.lx = 'pictype'
+        left join user_info T5 on T2.userid = T5.userid
+        where 1=1
+            and T2.userid = #{userid}
+        order by T2.cjsj asc
     </select>
 </mapper>

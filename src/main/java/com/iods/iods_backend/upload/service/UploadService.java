@@ -90,4 +90,9 @@ public class  UploadService {
         List<Map> data = uploadMapper.picSsrc();
         return data;
     }
+
+    public List<Map> wdsc(Map param) {
+        List<Map> data = uploadMapper.wdsc(param);
+        return data;
+    }
 }

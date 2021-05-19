@@ -14,8 +14,19 @@
      select * from user_info  where PHONE = #{phone}
 </select>
 
+    <select id="queryAllUser" resultType="com.iods.iods_backend.validate.entity.UserEntity">
+     select * from user_info
+</select>
+
     <insert id="insertUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">
     insert into user_info (NAME, PASSWORD, PHONE,userid) VALUES (#{name},#{password},#{phone},REPLACE(UUID(), '-', ''))
 </insert>
 
+    <update id="editUser" parameterType="java.util.Map">
+        update user_info set NAME = #{name} , PASSWORD = #{password} where userid = #{userid}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.String">
+        delete from user_info where userid = #{userid};
+    </delete>
 </mapper>

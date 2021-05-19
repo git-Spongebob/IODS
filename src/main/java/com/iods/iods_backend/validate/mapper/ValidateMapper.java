@@ -16,5 +16,10 @@ public interface ValidateMapper {
 
     List<UserEntity> queryUserByPhone(Map param);
 
+    List<UserEntity> queryAllUser();
+
     void insertUser(UserEntity userEntity);
+
+    void editUser(Map map);
+    void deleteUser(String userid);
 }

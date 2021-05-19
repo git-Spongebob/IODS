@@ -26,4 +26,8 @@ public class UserEntity {
      * 手机号
      */
     private String phone;
+    /**
+     * 是否是管理员
+     */
+    private String isadmin;
 }

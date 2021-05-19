@@ -26,6 +26,16 @@ public class ValidateService {
         return validateMapper.queryUserByPhone(param);
     }
 
+    public List<UserEntity> queryAllUser() {
+        return validateMapper.queryAllUser();
+    }
+    public void editUser(Map map) {
+        validateMapper.editUser(map);
+    }
+    public void deleteUser(String userid) {
+        validateMapper.deleteUser(userid);
+    }
+
     public void insertUser(UserEntity userEntity) {
         validateMapper.insertUser(userEntity);
     }

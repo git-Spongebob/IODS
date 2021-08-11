@@ -11,11 +11,11 @@ import lombok.Data;
 @Data
 public class UserEntity {
     /**
-     * 用户id
+     * 用户英文名
      */
-    private String userid;
+    private String ename;
     /**
-     * 用户名
+     * 用户中文名
      */
     private String name;
     /**
@@ -23,11 +23,19 @@ public class UserEntity {
      */
     private String password;
     /**
-     * 手机号
+     * 性别
      */
-    private String phone;
+    private String sex;
     /**
-     * 是否是管理员
+     * 所属组织机构
      */
-    private String isadmin;
+    private String department;
+    /**
+     * 角色
+     */
+    private String role;
+    /**
+     * 用户id
+     */
+    private String userid;
 }

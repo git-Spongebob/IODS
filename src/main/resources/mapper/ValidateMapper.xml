@@ -15,7 +15,7 @@
 </select>
 
     <select id="queryAllUser" resultType="com.iods.iods_backend.validate.entity.UserEntity">
-     select * from user_info
+     select * from userinfo
 </select>
 
     <insert id="insertUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">

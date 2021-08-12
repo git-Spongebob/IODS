@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iods.iods_backend.rolemanage.mapper.RoleManageMapper">
+    <select id="queryRole" resultType="com.iods.iods_backend.rolemanage.entity.RoleManageEntity">
+    select * from sys_role A where A.roleID = #{roleId} and A.PASSWORD = #{password}
+</select>
+
+
+    <select id="queryRoleByRoleName" resultType="com.iods.iods_backend.rolemanage.entity.RoleManageEntity">
+     select * from sys_role  where ROLENAME = #{roleName}
+</select>
+
+    <select id="queryAllRole" resultType="com.iods.iods_backend.rolemanage.entity.RoleManageEntity">
+     select * from sys_role
+</select>
+
+    <insert id="insertRole" parameterType="com.iods.iods_backend.rolemanage.entity.RoleManageEntity">
+    insert into sys_role (ID, ROLENAME, ROLEDESCRIPTION,ROLEPOWER,ROLESTATE) VALUES (#{roleId},#{roleName},#{roleDescription},#{rolePower},#{roleState})
+</insert>
+
+    <update id="editRole" parameterType="java.util.Map">
+        update sys_role set rolename = #{roleName} , roledescription = #{roleDescription} , rolestate = #{roleState} where roleid = #{roleId}
+    </update>
+
+    <delete id="deleteRole" parameterType="java.lang.String">
+        delete from sys_role where roleid = #{roleId};
+    </delete>
+</mapper>

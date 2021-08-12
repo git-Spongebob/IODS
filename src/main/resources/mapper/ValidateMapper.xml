@@ -23,10 +23,10 @@
 </insert>
 
     <update id="editUser" parameterType="java.util.Map">
-        update user_info set NAME = #{name} , PASSWORD = #{password} where userid = #{userid}
+        update userinfo set name = #{name} ,ename = #{ename}, password = #{password},sex= #{sex},department=#{department},role = #{role} where userid = #{userid}
     </update>
 
     <delete id="deleteUser" parameterType="java.lang.String">
-        delete from user_info where userid = #{userid};
+        delete from userinfo where userid = #{userid};
     </delete>
 </mapper>

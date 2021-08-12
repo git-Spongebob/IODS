@@ -37,10 +37,14 @@ public class ValidateController {
     public List<UserEntity> queryUserByPhone() {
         return validateService.queryAllUser();
     }
+    @GetMapping("/queryLikeUser")
+    public List<UserEntity> queryLikeUser(@RequestParam Map param) {
+        return validateService.queryLikeUser(param);
+    }
 
-    @PostMapping("/insertUser")
-    public String insertUser(@RequestBody UserEntity userEntity) {
-        validateService.insertUser(userEntity);
+    @PostMapping("/addUser")
+    public String addUser(@RequestBody UserEntity userEntity) {
+        validateService.addUser(userEntity);
         return "success";
     }
     /**

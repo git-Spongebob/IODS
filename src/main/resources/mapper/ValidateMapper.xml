@@ -3,7 +3,7 @@
 
 <mapper namespace="com.iods.iods_backend.validate.mapper.ValidateMapper">
     <select id="queryUser" resultType="com.iods.iods_backend.validate.entity.UserEntity">
-    select * from user_info A where A.PHONE = #{phoneNum} and A.PASSWORD = #{password}
+    select * from userinfo A where A.userid = #{userid} and A.password = #{password}
 </select>
 
     <select id="repeateTest" resultType="java.lang.String">
@@ -17,10 +17,17 @@
     <select id="queryAllUser" resultType="com.iods.iods_backend.validate.entity.UserEntity">
      select * from userinfo
 </select>
+    <select id="queryLikeUser" parameterType="java.util.Map" resultType="com.iods.iods_backend.validate.entity.UserEntity">
+     select * from userinfo T1 where
+     <if test="queryContent != null and queryContent != ''">
+         T1.name like concat('%',#{queryContent},'%')
+    </if>
+</select>
 
-    <insert id="insertUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">
-    insert into user_info (NAME, PASSWORD, PHONE,userid) VALUES (#{name},#{password},#{phone},REPLACE(UUID(), '-', ''))
+    <insert id="addUser" parameterType="com.iods.iods_backend.validate.entity.UserEntity">
+    insert into userinfo (ename,name, password, sex,department,role,userid) VALUES (#{ename},#{name},#{password},#{sex},#{department},#{role},#{userid})
 </insert>
+
 
     <update id="editUser" parameterType="java.util.Map">
         update userinfo set name = #{name} ,ename = #{ename}, password = #{password},sex= #{sex},department=#{department},role = #{role} where userid = #{userid}

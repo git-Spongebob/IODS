@@ -18,7 +18,9 @@ public interface ValidateMapper {
 
     List<UserEntity> queryAllUser();
 
-    void insertUser(UserEntity userEntity);
+    List<UserEntity> queryLikeUser(Map param);
+
+    void addUser(UserEntity userEntity);
 
     void editUser(Map map);
     void deleteUser(String userid);

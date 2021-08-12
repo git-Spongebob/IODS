@@ -29,6 +29,9 @@ public class ValidateService {
     public List<UserEntity> queryAllUser() {
         return validateMapper.queryAllUser();
     }
+    public List<UserEntity> queryLikeUser(Map param) {
+        return validateMapper.queryLikeUser(param);
+    }
     public void editUser(Map map) {
         validateMapper.editUser(map);
     }
@@ -36,7 +39,7 @@ public class ValidateService {
         validateMapper.deleteUser(userid);
     }
 
-    public void insertUser(UserEntity userEntity) {
-        validateMapper.insertUser(userEntity);
+    public void addUser(UserEntity userEntity) {
+        validateMapper.addUser(userEntity);
     }
 }

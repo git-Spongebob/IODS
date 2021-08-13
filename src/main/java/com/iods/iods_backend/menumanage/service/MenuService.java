@@ -14,6 +14,7 @@ public class MenuService {
     @Autowired
      MenuMapper menuMapper;
 
+
     public List<MenuEntity> queryAllUser() {
         return menuMapper.queryAllUser();
     }
@@ -24,4 +25,11 @@ public class MenuService {
     public void insertUser(Map map) {
         menuMapper.insertUser(map);
     }
+    public void addMenu(MenuEntity menuEntity) {
+        menuMapper.addMenu(menuEntity);
+    }
+    public void deleteMenu(int id) {
+        menuMapper.deleteMenu(id);
+    }
+
 }

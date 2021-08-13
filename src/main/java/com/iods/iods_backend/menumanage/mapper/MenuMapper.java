@@ -16,4 +16,6 @@ public interface MenuMapper {
     List<MenuEntity> queryAllUser();
     void editUser(Map map);
     void insertUser(Map map);
+    void addMenu(MenuEntity menuEntity);
+    void deleteMenu(int id);
 }

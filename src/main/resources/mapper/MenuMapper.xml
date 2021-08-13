@@ -7,7 +7,7 @@
 --      select a.type from sys_menu_type as a sys_menu as b where a.id= b.type;
 </select>
     <update id="editUser" parameterType="java.util.Map">
-        update sys_menu set NAME = #{name} , PERMS = #{perms} , ICON = #{icon} , PATH = #{path} ,
+        update sys_menu set name = #{name} , PERMS = #{perms} , ICON = #{icon} , PATH = #{path} ,
         COMPONENT = #{component} , TYPE = #{type} , STATU = #{statu} where ID = #{id}
     </update>
 <!--    <insert id="insertUser" parameterType="java.util.Map">-->
@@ -26,15 +26,21 @@
 <!--    VALUES (#{name},#{perms},#{icon})-->
 <!--</insert>-->
 
+<!--     insert into sys_menu values (#{name} , #{perms} , #{icon})-->
+<!--    <insert id="insertUser" parameterType="com.iods.iods_backend.menumanage.entity.MenuEntity">-->
 
-    <insert id="insertUser" parameterType="com.iods.iods_backend.menumanage.entity.MenuEntity">
+<!--insert into sys_menu (NAME , PERMS , ICON )-->
+<!--    VALUES (#{name},#{perms},#{icon})-->
+
+<!--    </insert>-->
 
 
-
-        insert into sys_menu values (#{name} , #{perms} , #{icon})
-
-
-    </insert>
+    <insert id="addMenu" parameterType="com.iods.iods_backend.menumanage.entity.MenuEntity">
+    insert into sys_menu  (name, perms, icon,path,component,type,statu) VALUES (#{name},#{perms},#{icon},#{path},#{component},#{type},#{statu})
+</insert>
+    <delete id="deleteMenu" parameterType="com.iods.iods_backend.menumanage.entity.MenuEntity">
+        delete from sys_menu where id = #{id};
+    </delete>
 
 
 </mapper>

@@ -47,8 +47,33 @@ public class MenuController {
         menuService.insertUser(map);
         return "success";
     }
+    /**
+     * 新建菜单
+     * @param
+     * @return
+     */
+    @PostMapping("/addMenu")
+    public String addMenu(@RequestBody MenuEntity menuEntity) {
+        menuService.addMenu(menuEntity);
+        return "success";
+    }
 
 
+    /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value="/deleteMenu/{id}")
+    public ReturnMessage deleteUser(@PathVariable("id") int id){
+        try {
+            menuService.deleteMenu(id);
+            return new ReturnMessage().success();
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ReturnMessage().faild(e.getMessage());
+        }
+    }
 
 
 

@@ -1,12 +1,9 @@
 package com.iods.iods_backend.menumanage.controller;
 
 
-import com.iods.iods_backend.menumanage.entity.Menu;
 import com.iods.iods_backend.menumanage.entity.MenuEntity;
-import com.iods.iods_backend.menumanage.entity.SysMenu;
 import com.iods.iods_backend.menumanage.service.MenuService;
 import com.iods.iods_backend.upload.entity.ReturnMessage;
-import com.iods.iods_backend.validate.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
